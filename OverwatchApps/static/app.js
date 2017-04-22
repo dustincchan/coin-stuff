@@ -4,6 +4,7 @@ $(function () {
   var coinDataMonth = JSON.parse(mainCoinDataMonth);
 
   var bitcoinDataDay = convertDataToHighChartFormat(coinDataDay.bitcoin);
+  console.log(bitcoinDataDay);
   var ethereumDataDay = convertDataToHighChartFormat(coinDataDay.ethereum);
   var litecoinDataDay = convertDataToHighChartFormat(coinDataDay.litecoin);
 
@@ -15,7 +16,7 @@ $(function () {
   var ethereumDataMonth = convertDataToHighChartFormat(coinDataMonth.ethereum);
   var litecoinDataMonth = convertDataToHighChartFormat(coinDataMonth.litecoin);
 
-  makeHighChart(bitcoinDataDay, litecoinDataDay, ethereumDataDay, 'day-container', 'Past Day');
+  makeHighChart(bitcoinDataDay, litecoinDataDay, ethereumDataDay, 'day-container', 'Past 24 Hours');
   makeHighChart(bitcoinDataWeek, litecoinDataWeek, ethereumDataWeek, 'week-container', 'Past Week');
   makeHighChart(bitcoinDataMonth, litecoinDataMonth, ethereumDataMonth, 'month-container', 'Past Month');
 
@@ -23,7 +24,7 @@ $(function () {
     var keys = Object.keys(coinDict);
     var vals = convertValsToStdDevs(Object.values(coinDict));
     var zipped = keys.map(function(time, i) {
-      return [time, vals[i]];
+      return [parseInt(time), vals[i]];
     });
     return zipped;
   }
