@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% include "navbar.html" %}
 {% block content %}
-<script>var mainCoinData = {{ mainCoinData | safe }}</script>
-<div id="container" style="width:100%; height:400px;"></div>
+<script>
+  var mainCoinDataDay = {{ mainCoinDataDay | safe }}
+  var mainCoinDataWeek = {{ mainCoinDataWeek | safe }}
+  var mainCoinDataMonth = {{ mainCoinDataMonth | safe }}
+</script>
+<div id="day-container" style="width:100%; height:400px;"></div><br/>
+<div id="week-container" style="width:100%; height:400px;"></div><br/>
+<div id="month-container" style="width:100%; height:400px;"></div>
 {% endblock %}

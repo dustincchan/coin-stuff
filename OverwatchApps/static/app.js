@@ -1,9 +1,23 @@
 $(function () {
-  var majorAltCoinData = JSON.parse(mainCoinData);
-  var bitcoinData = convertDataToHighChartFormat(majorAltCoinData.bitcoin);
-  var ethereumData = convertDataToHighChartFormat(majorAltCoinData.ethereum);
-  var litecoinData = convertDataToHighChartFormat(majorAltCoinData.litecoin);
+  var coinDataDay = JSON.parse(mainCoinDataDay);
+  var coinDataWeek = JSON.parse(mainCoinDataWeek);
+  var coinDataMonth = JSON.parse(mainCoinDataMonth);
 
+  var bitcoinDataDay = convertDataToHighChartFormat(coinDataDay.bitcoin);
+  var ethereumDataDay = convertDataToHighChartFormat(coinDataDay.ethereum);
+  var litecoinDataDay = convertDataToHighChartFormat(coinDataDay.litecoin);
+
+  var bitcoinDataWeek = convertDataToHighChartFormat(coinDataWeek.bitcoin);
+  var ethereumDataWeek = convertDataToHighChartFormat(coinDataWeek.ethereum);
+  var litecoinDataWeek = convertDataToHighChartFormat(coinDataWeek.litecoin);
+
+  var bitcoinDataMonth = convertDataToHighChartFormat(coinDataMonth.bitcoin);
+  var ethereumDataMonth = convertDataToHighChartFormat(coinDataMonth.ethereum);
+  var litecoinDataMonth = convertDataToHighChartFormat(coinDataMonth.litecoin);
+
+  makeHighChart(bitcoinDataDay, litecoinDataDay, ethereumDataDay, 'day-container', 'Past Day');
+  makeHighChart(bitcoinDataWeek, litecoinDataWeek, ethereumDataWeek, 'week-container', 'Past Week');
+  makeHighChart(bitcoinDataMonth, litecoinDataMonth, ethereumDataMonth, 'month-container', 'Past Month');
 
   function convertDataToHighChartFormat(coinDict) {
     var keys = Object.keys(coinDict);
@@ -35,72 +49,49 @@ $(function () {
       return val / standardDeviation;
     });
   }
-    var highChart = Highcharts.chart('container', {
-        chart: {
-            zoomType: 'x'
-        },
+
+
+  function makeHighChart(btcData, ltcData, ethData, elementName, timeframe) {
+    Highcharts.chart(elementName, {
+      chart: {
+        zoomType: 'x'
+      },
+      title: {
+        text: 'Standard Deviation of Google Search Volume ' + timeframe
+      },
+      subtitle: {
+        text: document.ontouchstart === undefined ?
+        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+      },
+      xAxis: {
+        type: 'datetime'
+      },
+      yAxis: {
         title: {
-            text: 'Standard Deviation of Google Search Volume'
+          text: 'Standard Deviations'
+        }
+      },
+      legend: {
+        enabled: true
+      },
+      series: [
+        {
+          type: 'line',
+          name: 'Bitcoin',
+          data: btcData,
         },
-        subtitle: {
-            text: document.ontouchstart === undefined ?
-                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+        {
+          type: 'line',
+          name: 'Ethereum',
+          data: ethData,
         },
-        xAxis: {
-            type: 'datetime'
-        },
-        yAxis: {
-            title: {
-                text: 'Standard Deviations'
-            }
-        },
-        legend: {
-            enabled: true
-        },
-        // plotOptions: {
-        //     area: {
-        //         fillColor: {
-        //             linearGradient: {
-        //                 x1: 0,
-        //                 y1: 0,
-        //                 x2: 0,
-        //                 y2: 1
-        //             },
-        //             stops: [
-        //                 [0, Highcharts.getOptions().colors[0]],
-        //                 [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-        //             ]
-        //         },
-        //         marker: {
-        //             radius: 2
-        //         },
-        //         lineWidth: 1,
-        //         states: {
-        //             hover: {
-        //                 lineWidth: 1
-        //             }
-        //         },
-        //         threshold: null
-        //     }
-        // },
-        series: [
-          {
-            type: 'line',
-            name: 'Bitcoin',
-            data: bitcoinData,
-          },
-          {
-            type: 'line',
-            name: 'Ethereum',
-            data: ethereumData,
-          },
-          {
-            type: 'line',
-            name: 'Litecoin',
-            data: litecoinData
-          }
-        ]
+        {
+          type: 'line',
+          name: 'Litecoin',
+          data: ltcData
+        }
+      ]
     });
-    // debugger;
-    // highChart.legend.render();
+  }
+
 });

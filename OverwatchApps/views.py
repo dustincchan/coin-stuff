@@ -9,4 +9,12 @@ import json
 def home(request):
     pytrend = TrendReq('pytrendstestbuster', 'pingdriver', hl='en-US', tz=360, custom_useragent=None)
     pytrend.build_payload(kw_list=['bitcoin', 'ethereum', 'litecoin'], timeframe='now 1-d')
-    return render(request, "home.html", {'mainCoinData': json.dumps(pytrend.interest_over_time().to_json())})
+    day_data = json.dumps(pytrend.interest_over_time().to_json())
+
+    pytrend.build_payload(kw_list=['bitcoin', 'ethereum', 'litecoin'], timeframe='now 7-d')
+    week_data = json.dumps(pytrend.interest_over_time().to_json())
+
+    pytrend.build_payload(kw_list=['bitcoin', 'ethereum', 'litecoin'], timeframe='today 1-m')
+    month_data = json.dumps(pytrend.interest_over_time().to_json())
+
+    return render(request, "home.html", {'mainCoinDataDay': day_data, 'mainCoinDataWeek': week_data, 'mainCoinDataMonth': month_data})
