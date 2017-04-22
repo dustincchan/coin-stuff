@@ -14,8 +14,26 @@ $(function () {
     return zipped;
   }
 
+  function arraySum(arr) {
+    return arr.reduce(function(prev, curr) {
+      return curr += prev;
+    });
+  }
+
   function convertValsToStdDevs(vals) {
-    debugger;
+    var sum = arraySum(vals);
+    var avg = sum / vals.length;
+    var squared_diffs = vals.map(function(val) {
+      var diff = val - avg;
+      return diff**2;
+    });
+    var sum_of_squared_diffs = arraySum(squared_diffs);
+    var mean_of_squared_diffs = sum_of_squared_diffs / vals.length;
+    standardDeviation = Math.sqrt(mean_of_squared_diffs);
+
+    return vals.map(function(val) {
+      return val / standardDeviation;
+    });
   }
     var highChart = Highcharts.chart('container', {
         chart: {
