@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% include "navbar.html" %}
 {% block content %}
+<script>var mainCoinData = {{ mainCoinData | safe }}</script>
 <div id="container" style="width:100%; height:400px;"></div>
 {% endblock %}
