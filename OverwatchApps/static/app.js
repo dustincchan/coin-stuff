@@ -46,7 +46,7 @@ $(function () {
     standardDeviation = Math.sqrt(mean_of_squared_diffs);
 
     return vals.map(function(val) {
-      return val / standardDeviation;
+      return (val - avg) / standardDeviation;
     });
   }
 
