@@ -24,7 +24,7 @@ $(function () {
     var keys = Object.keys(coinDict);
     var vals = convertValsToStdDevs(Object.values(coinDict));
     var zipped = keys.map(function(time, i) {
-      return [parseInt(time), vals[i]];
+      return [parseInt(time) - 25200000, vals[i]];
     });
     return zipped;
   }
@@ -54,6 +54,9 @@ $(function () {
 
   function makeHighChart(btcData, ltcData, ethData, elementName, timeframe) {
     Highcharts.chart(elementName, {
+      global: {
+        useUTC: false
+      },
       chart: {
         zoomType: 'x'
       },
